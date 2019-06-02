@@ -14,14 +14,31 @@
 	(empty? (letras-faltantes palavra acertos))
 )
 
+(defn le-letra! [] (read-line))
+
+(defn acertou? [chute palavra]
+	(.contains palavra chute)
+)
+
+(defn avalia-chute [chute vidas palavra acertos]
+	(if(acertou? chute palavra)
+		(jogo vidas palavra (conj acertos chute))
+		(jogo (dec vidas) palavra acertos)
+	)
+)
+
 (defn jogo [vidas palavra acertos] 
 	(if (= vidas 0)
 		(perdeu)
 		(if (acertou-toda-a-palavra? palavra acertos) 
 			(ganhou) 
-			(print "Chuta a próxima letra.")
+			(avalia-chute (le-letra!) vidas palavra acertos)
 		)
 	)
+)
+
+(defn letra-inteira [funcao]
+	(* (Integer/parseInt (funcao)) 7)
 )
 
 (defn fib [n] 
