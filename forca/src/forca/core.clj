@@ -2,6 +2,7 @@
   (:gen-class))
 
 (def total-de-vidas 6)
+(def palavra-secreta "CARRO")
 
 (defn perdeu [] (print "Voce perdeu!"))
 (defn ganhou [] (print "Voce ganhou!"))
@@ -52,6 +53,8 @@
 	)
 )
 
+(defn comeca-o-jogo [] (jogo total-de-vidas palavra-secreta #{}))
+
 (defn letra-inteira [funcao]
 	(* (Integer/parseInt (funcao)) 7)
 )
@@ -79,7 +82,6 @@
 	)
 )
 
-(defn -main
-  "I don't do a whole lot ... yet."
-  [& args]
-  (println "Hello, World!"))
+(defn -main [& args]
+  (comeca-o-jogo)
+)
