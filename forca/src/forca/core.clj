@@ -20,19 +20,23 @@
 	(.contains palavra chute)
 )
 
-(defn avalia-chute [chute vidas palavra acertos]
-	(if(acertou? chute palavra)
-		(jogo vidas palavra (conj acertos chute))
-		(jogo (dec vidas) palavra acertos)
-	)
-)
-
 (defn jogo [vidas palavra acertos] 
 	(if (= vidas 0)
 		(perdeu)
 		(if (acertou-toda-a-palavra? palavra acertos) 
-			(ganhou) 
-			(avalia-chute (le-letra!) vidas palavra acertos)
+			(ganhou)
+			(let [chute (le-letra!)]
+				(if(acertou? chute palavra)
+					(do
+						(println "Acertou a letra!")
+						(recur vidas palavra (conj acertos chute))
+					)
+					(do
+						(println "Errou a letra...")
+						(recur (dec vidas) palavra acertos)
+					)
+				)
+			)
 		)
 	)
 )
@@ -42,14 +46,25 @@
 )
 
 (defn fib [n] 
-	(if (= n 0) 0
-		(if (= n 1) 1
-		 (+ (fib (dec n)) (fib (- n 2))))))
-
+	(loop [a 1 b 1 numero 2]
+	(if (= numero n) b
+		(recur b (+ a b) (inc numero))
+	)
+	)
+)
+	
 (defn filtro [nums]
 	(filter 
 		(fn [x] (or (> x 4) (< x 2))
 		) nums
+	)
+)
+
+(defn soma [n]
+	(loop [contador 1 soma 0]
+		(if (> contador n) soma
+			(recur (inc contador) (+ contador soma))
+		)
 	)
 )
 
